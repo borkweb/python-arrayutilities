@@ -7,7 +7,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "arrayutils"
 version = "1.0.0"
-description = "A library for array manipulations."
+description = "A library for list, dict, and UserDict manipulations."
 readme = "README.md"
 authors = [{ name = "Matthew Batchelder", email = "borkweb@gmail.com" }]
 license = { file = "LICENSE" }

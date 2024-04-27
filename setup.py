@@ -4,7 +4,7 @@ setup(
     name='arrayutils',
     packages=find_packages(),
     version='1.0.0',
-    description='A library for array manipulations.',
+    description='A library for list, dict, and UserDict manipulations.',
     author='Matthew Batchelder',
     author_email='borkweb@gmail.com',
     install_requires=[],
