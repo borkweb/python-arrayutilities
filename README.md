@@ -53,6 +53,7 @@ pip install arrayutilities
     * [sort_recursive_desc](#usage.sort_recursive_desc)
     * [stringify_keys](#usage.stringify_keys)
     * [strpos](#usage.strpos)
+    * [str_to_list](#str_to_list)
     * [undot](#usage.undot)
     * [usearch](#usage.usearch)
     * [visit_recursive](#usage.visit_recursive)
