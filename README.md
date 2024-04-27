@@ -24,7 +24,7 @@ pip install arrayutilities
     * [collapse](#usage.collapse)
     * [dot](#usage.dot)
     * [exists](#usage.exists)
-    * [filter\_prefixed](#usage.filter_prefixed)
+    * [filter_prefixed](#usage.filter_prefixed)
     * [first](#usage.first)
     * [flatten](#usage.flatten)
     * [forget](#usage.forget)
@@ -139,7 +139,7 @@ result = Arr.add(test_list, 4, 4) # Result: [1, 2, 3, 4]
 
 <a id="Arr.add_prefixed_keys_to"></a>
 
-### add\_prefixed\_keys\_to
+### add_prefixed_keys_to
 
 ```python
 @staticmethod
@@ -172,7 +172,7 @@ result = Arr.add_prefixed_keys_to(my_list) # Result: {0: 1, 1: 2, 2: 3, '_0': 1,
 
 <a id="Arr.add_unprefixed_keys_to"></a>
 
-### add\_unprefixed\_keys\_to
+### add_unprefixed_keys_to
 
 ```python
 @staticmethod
@@ -288,7 +288,7 @@ Arr.exists({'a': 1, 'b': 2}, 'c') # Result: False
 
 <a id="Arr.filter_prefixed"></a>
 
-### filter\_prefixed
+### filter_prefixed
 
 ```python
 @staticmethod
@@ -473,7 +473,7 @@ Arr.has({'a': 1, 'b': 2}, ['a', 'x']) # Result: False
 
 <a id="Arr.insert_after_key"></a>
 
-### insert\_after\_key
+### insert_after_key
 
 ```python
 @staticmethod
@@ -503,7 +503,7 @@ Arr.insert_after_key('b', {'a': 1, 'b': 2, 'c': 3}, 25) # Result: raises TypeErr
 
 <a id="Arr.insert_before_key"></a>
 
-### insert\_before\_key
+### insert_before_key
 
 ```python
 @staticmethod
@@ -533,7 +533,7 @@ Arr.insert_before_key('b', {'a': 1, 'b': 2, 'c': 3}, 25) # Result: raises TypeEr
 
 <a id="Arr.is_dict"></a>
 
-### is\_dict
+### is_dict
 
 ```python
 @staticmethod
@@ -561,7 +561,7 @@ Arr.is_dict(1) # Result: False
 
 <a id="Arr.is_list"></a>
 
-### is\_list
+### is_list
 
 ```python
 @staticmethod
@@ -648,7 +648,7 @@ Arr.last([1, 3, 5], lambda x: x % 2 == 0, default='no match') # Result: 'no matc
 
 <a id="Arr.list_to_dict"></a>
 
-### list\_to\_dict
+### list_to_dict
 
 ```python
 @staticmethod
@@ -675,7 +675,7 @@ Arr.list_to_dict('not a list') # Result: {0: 'not a list'}
 
 <a id="Arr.list_to_string"></a>
 
-### list\_to\_string
+### list_to_string
 
 ```python
 @staticmethod
@@ -704,7 +704,7 @@ Arr.list_to_string(['apple', 'banana', 'cherry'], sep=';') # Result: 'apple;bana
 
 <a id="Arr.merge_recursive"></a>
 
-### merge\_recursive
+### merge_recursive
 
 ```python
 @staticmethod
@@ -903,7 +903,7 @@ Arr.random({'a': 1, 'b': 2, 'c': 3, 'd': 4, 'e': 5}, number=3, preserve_keys=Tru
 
 <a id="Arr.recursive_ksort"></a>
 
-### recursive\_ksort
+### recursive_ksort
 
 ```python
 @staticmethod
@@ -964,7 +964,7 @@ Arr.set({}, ['a', 'b', 'c'], 1) # Result: {'a': {'b': {'c': 1}}}
 
 <a id="Arr.shape_filter"></a>
 
-### shape\_filter
+### shape_filter
 
 ```python
 @staticmethod
@@ -1034,7 +1034,7 @@ Arr.shuffle(test_array, 1234) # Result: Shuffled array with a specific seed
 
 <a id="Arr.sort_by_priority"></a>
 
-### sort\_by\_priority
+### sort_by_priority
 
 ```python
 @staticmethod
@@ -1061,7 +1061,7 @@ Arr.sort_by_priority(input_array) # Result: [{'name': 'Alice', 'priority': 1}, {
 
 <a id="Arr.sort_recursive"></a>
 
-### sort\_recursive
+### sort_recursive
 
 ```python
 @staticmethod
@@ -1092,7 +1092,7 @@ Arr.sort_recursive(input_array, descending=True) # Result: {'c': 3, 'a': {'d': 4
 
 <a id="Arr.sort_recursive_desc"></a>
 
-### sort\_recursive\_desc
+### sort_recursive_desc
 
 ```python
 @staticmethod
@@ -1120,7 +1120,7 @@ Arr.sort_recursive_desc(input_array) # Result: {'c': 3, 'a': {'d': 4, 'b': 2}}
 
 <a id="Arr.stringify_keys"></a>
 
-### stringify\_keys
+### stringify_keys
 
 ```python
 @staticmethod
@@ -1185,7 +1185,7 @@ Arr.strpos("hello world hello", "hello", 6) # Result: 12
 
 <a id="Arr.str_to_list"></a>
 
-### str\_to\_list
+### str_to_list
 
 ```python
 @staticmethod
@@ -1281,7 +1281,7 @@ Arr.usearch(needle, haystack, callback) # Result: 'b'
 
 <a id="Arr.visit_recursive"></a>
 
-### visit\_recursive
+### visit_recursive
 
 ```python
 @staticmethod
@@ -1344,7 +1344,7 @@ Arr.where(array, callback) # Result: {'b': 2, 'd': 4}
 
 <a id="Arr.where_not_none"></a>
 
-### where\_not\_none
+### where_not_none
 
 ```python
 @staticmethod
