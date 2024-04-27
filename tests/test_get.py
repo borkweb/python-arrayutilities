@@ -12,6 +12,14 @@ class TestArr(unittest.TestCase):
         result = Arr.get(test_dict, ['b', 'c'])
         self.assertEqual(result, 2, "Should return the value of nested key 'c' under 'b'")
 
+    def test_get_deep_nested_key(self):
+        test_dict = {'a': 1, 'b': {'c': { 'e': 2}, 'd': 3}}
+        result = Arr.get(test_dict, ['b', 'c', 'e'])
+        self.assertEqual(result, 2, "Should return the value of nested key 'e' under 'c' under 'b'")
+
+        result = Arr.get(test_dict, ['b', 'd'])
+        self.assertEqual(result, 3, "Should return the value of nested key 'd' under 'b'")
+
     def test_get_non_existent_key_returns_default(self):
         test_dict = {'a': 1, 'b': 2}
         result = Arr.get(test_dict, 'c', default='Not Found')

@@ -34,8 +34,10 @@ class Arr:
         Returns:
             Manipulated array
         """
-        if Arr.get(array, key) is None:
-            Arr.set(array, key, value)
+        if isinstance(array, list) and isinstance(key, int) and len(array) < key:
+            array.extend([value])
+        elif Arr.get(array, key) is None:
+            array = Arr.set(array, key, value)
         return array
 
     @staticmethod
@@ -50,14 +52,22 @@ class Arr:
         Returns:
             Manipulated array.
         """
-        if not isinstance(array, dict):
+        if not isinstance(array, dict) and not isinstance(array, list):
             return array
+
+        array = Arr.list_to_dict(array)
 
         prefixed = {}
         for key, value in array.items():
             if recursive and isinstance(value, dict):
                 value = Arr.add_prefixed_keys_to(value, True)
                 array[key] = {**array[key], **value}
+            elif recursive and isinstance(value, list):
+                value = Arr.add_prefixed_keys_to(value, True)
+                array[key] = {**array[key], **value}
+
+            if isinstance(key, int):
+                key = str(key)
 
             if not key.startswith('_'):
                 prefixed[f'_{key}'] = value
@@ -94,34 +104,6 @@ class Arr:
         # Update the array with unprefixed keys at the current level
         array.update(to_update)
         return array
-
-    @staticmethod
-    def array_visit_recursive(input_array, visitor):
-        """
-        Recursively visits all elements of an array applying the specified callback to each element key and value.
-
-        Args:
-            input_array: The input array whose nodes should be visited.
-            visitor: A callback function that will be called on each array item; the callback will
-                        receive the item key and value as input and should return an array that contains
-                        the update key and value in the shape [ &lt;key&gt;, &lt;value&gt; ]. Returning a null
-                        key will cause the element to be removed from the array.
-
-        Returns:
-            Manipulated array.
-        """
-        if not isinstance(input_array, dict):
-            return input_array
-
-        result = {}
-        for key, value in input_array.items():
-            if isinstance(value, dict):
-                value = Arr.array_visit_recursive(value, visitor)
-            updated_key, updated_value = visitor(key, value)
-            if updated_key is not None:
-                result[updated_key] = updated_value
-
-        return result
 
     @staticmethod
     def collapse(array):
@@ -214,7 +196,7 @@ class Arr:
 
         Args:
             array: Array to flatten.
-            depth (number, optional): Number of nestings deep that should be flattened. Defaults to float('inf').
+            depth (int, optional): Number of nestings deep that should be flattened. Defaults to float('inf').
 
         Returns:
             Flattened array.
@@ -285,40 +267,104 @@ class Arr:
         return True
 
     @staticmethod
-    def insert_after_key(key, source_array, insert):
+    def insert_after_key(key, source, insert):
         """
-        Insert an array after a specified key within another array.
+        Insert an item or items after a specified key within a list or a dictionary.
 
         Args:
-            key (str|number): The key of the array to insert after.
-            source_array (array): The array to insert into.
+            key (str|int): The key or index of the item to insert after.
+            source (list|dict): The list or dictionary to insert into.
             insert (Any): Value or array to insert.
 
         Returns:
-            Manipulated array.
+            list|dict: Manipulated source with the insertions.
         """
-        if not isinstance(insert, list):
-            insert = [insert]
-        index = next((i for i, k in enumerate(source_array) if k == key), len(source_array))
-        return source_array[:index+1] + insert + source_array[index+1:]
+        if isinstance(source, list):
+            # Handle list
+            if isinstance(key, int) and 0 <= key < len(source):
+                insert_position = key + 1
+            else:
+                insert_position = len(source)  # Append at the end if out of bounds
+            if isinstance(insert, list):
+                source[insert_position:insert_position] = insert
+            else:
+                source.insert(insert_position, insert)
+
+        elif isinstance(source, dict):
+            # Handle dictionary
+            if key in source:
+                keys = list(source.keys())
+                index = keys.index(key) + 1
+                new_dict = {}
+                for k in keys[:index]:
+                    new_dict[k] = source[k]
+                if isinstance(insert, dict):
+                    new_dict.update(insert)
+                else:
+                    # Raise error for non-dict inserts into dicts
+                    raise TypeError("Insertion into a dictionary must be a dictionary")
+                for k in keys[index:]:
+                    new_dict[k] = source[k]
+                source = new_dict
+            else:
+                if isinstance(insert, dict):
+                    source.update(insert)
+                else:
+                    source[key] = insert  # Add at the end if key does not exist
+        else:
+            raise TypeError("Source must be either a list or a dictionary")
+
+        return source
 
     @staticmethod
-    def insert_before_key(key, source_array, insert):
+    def insert_before_key(key, source, insert):
         """
-        Insert an array before a specified key within another array.
+        Insert an item or items before a specified key within a list or a dictionary.
 
         Args:
-            key (str|number): The key of the array to insert before.
-            source_array (array): The array to insert into.
+            key (str|int): The key or index of the item to insert before.
+            source (list|dict): The list or dictionary to insert into.
             insert (Any): Value or array to insert.
 
         Returns:
-            Manipulated array.
+            list|dict: Manipulated source with the insertions.
         """
-        if not isinstance(insert, list):
-            insert = [insert]
-        index = next((i for i, k in enumerate(source_array) if k == key), len(source_array))
-        return source_array[:index] + insert + source_array[index:]
+        if isinstance(source, list):
+            # Handle list
+            if isinstance(key, int) and 0 <= key < len(source):
+                insert_position = key
+            else:
+                # If the key is out of range, do not append it at the end; handle it as error or ignore
+                raise IndexError("List index out of range")
+            if isinstance(insert, list):
+                source[insert_position:insert_position] = insert
+            else:
+                source.insert(insert_position, insert)
+
+        elif isinstance(source, dict):
+            # Handle dictionary
+            if key in source:
+                keys = list(source.keys())
+                index = keys.index(key)
+                new_dict = {}
+                for k in keys[:index]:
+                    new_dict[k] = source[k]
+                if isinstance(insert, dict):
+                    new_dict.update(insert)
+                else:
+                    # Raise error for non-dict inserts into dicts
+                    raise TypeError("Insertion into a dictionary must be a dictionary")
+                for k in keys[index:]:
+                    new_dict[k] = source[k]
+                source = new_dict
+            else:
+                # If the key does not exist, handle as error or ignore
+                raise KeyError(f"Key '{key}' not found in dictionary")
+
+        else:
+            raise TypeError("Source must be either a list or a dictionary")
+
+        return source
 
     @staticmethod
     def is_dict(array):
@@ -392,25 +438,42 @@ class Arr:
 
         return default
 
+
     @staticmethod
-    def list_to_array(value, sep=','):
+    def list_to_dict(value):
         """
-        Converts a list to an array filtering out empty string elements.
+        Converts a list to a dict.
 
         Args:
-            value (str|number|None): A string representing a list of values separated by the specified separator
-                            or an array. If the list is a string (e.g. a CSV list) then it will urldecoded
-                            before processing.
-            sep (str, optional): The char(s) separating the list elements; will be ignored if the list is an array. Defaults to ','.
+            value (list): A list to convert to a dict.
 
         Returns:
-            Manipulated array.
+            dict: Converted list.
         """
-        if not value:
-            return []
-        if isinstance(value, str):
-            value = value.split(sep)
-        return [v.strip() for v in value if v.strip()]
+        if isinstance(value, dict):
+            return value
+
+        value = Arr.wrap(value)
+
+        return dict(enumerate(value))
+
+    @staticmethod
+    def list_to_string(list_items, sep=','):
+        """
+        Returns a list separated by the specified separator.
+
+        Args:
+            list_items: Array of items.
+            sep (str, optional): Separator. Defaults to ','.
+
+        Returns:
+            The list separated by the specified separator or the original list if the list is empty.
+        """
+        if not list_items:
+            return list_items
+        if isinstance(list_items, list):
+            return sep.join(map(str, list_items))
+        return str(list_items)
 
     @staticmethod
     def merge_recursive(array1, array2):
@@ -454,7 +517,7 @@ class Arr:
         Args:
             array: Array to manipulate.
             value (Any): Value to prepend.
-            key (string|number, optional): Key value for the prepended item. Defaults to None.
+            key (string|int, optional): Key value for the prepended item. Defaults to None.
 
         Returns:
             Manipulated array.
@@ -475,7 +538,7 @@ class Arr:
 
         Args:
             array: Array to search and manipulate.
-            key (str|number): Key to look for and fetch.
+            key (str|int): Key to look for and fetch.
             default (Any, optional): Default value if none found. Defaults to None.
 
         Returns:
@@ -522,7 +585,7 @@ class Arr:
 
         Args:
             array: Array to search through.
-            number (number, optional): Number of items to randomly grab. Defaults to None.
+            number (int, optional): Number of items to randomly grab. Defaults to None.
             preserve_keys (bool, optional): Whether the keys should be preserved or not. Defaults to False.
 
         Raises:
@@ -713,22 +776,24 @@ class Arr:
         return min_position if min_position != len(haystack) else False
 
     @staticmethod
-    def to_list(list_items, sep=','):
+    def str_to_list(value, sep=','):
         """
-        Returns a list separated by the specified separator.
+        Converts a list to an array filtering out empty string elements.
 
         Args:
-            list_items: Array of items.
-            sep (str, optional): Separator. Defaults to ','.
+            value (str|int|None): A string representing a list of values separated by the specified separator
+                            or an array. If the list is a string (e.g. a CSV list) then it will urldecoded
+                            before processing.
+            sep (str, optional): The char(s) separating the list elements; will be ignored if the list is an array. Defaults to ','.
 
         Returns:
-            The list separated by the specified separator or the original list if the list is empty.
+            Manipulated array.
         """
-        if not list_items:
-            return list_items
-        if isinstance(list_items, list):
-            return sep.join(map(str, list_items))
-        return str(list_items)
+        if not value:
+            return []
+        if isinstance(value, str):
+            value = value.split(sep)
+        return [v.strip() for v in value if v.strip()]
 
     @staticmethod
     def undot(obj):
@@ -780,6 +845,34 @@ class Arr:
             if callback(needle, value, key):
                 return key
         return False
+
+    @staticmethod
+    def visit_recursive(input_array, visitor):
+        """
+        Recursively visits all elements of an array applying the specified callback to each element key and value.
+
+        Args:
+            input_array: The input array whose nodes should be visited.
+            visitor: A callback function that will be called on each array item; the callback will
+                        receive the item key and value as input and should return an array that contains
+                        the update key and value in the shape [ &lt;key&gt;, &lt;value&gt; ]. Returning a null
+                        key will cause the element to be removed from the array.
+
+        Returns:
+            Manipulated array.
+        """
+        if not isinstance(input_array, dict):
+            return input_array
+
+        result = {}
+        for key, value in input_array.items():
+            if isinstance(value, dict):
+                value = Arr.visit_recursive(value, visitor)
+            updated_key, updated_value = visitor(key, value)
+            if updated_key is not None:
+                result[updated_key] = updated_value
+
+        return result
 
     @staticmethod
     def where(array, callback):

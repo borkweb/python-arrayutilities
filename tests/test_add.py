@@ -12,10 +12,15 @@ class TestArr(unittest.TestCase):
         result = Arr.add(test_dict, 'a', 3)
         self.assertEqual(result, {'a': 1}, "Should not modify existing key")
 
-    def test_add_with_non_dict(self):
+    def test_no_add_with_overlap_and_non_dict(self):
         test_list = [1, 2, 3]
         result = Arr.add(test_list, 1, 4)
         self.assertEqual(result, [1, 2, 3], "Should return the original list unmodified")
+
+    def test_add_with_non_dict(self):
+        test_list = [1, 2, 3]
+        result = Arr.add(test_list, 4, 4)
+        self.assertEqual(result, [1, 2, 3, 4], "Should add a new key-value pair")
 
     def test_add_none_value(self):
         test_dict = {'a': 1}

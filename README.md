@@ -19,9 +19,8 @@ pip install arrayutilities
 * [Usage](#usage)
     * [accessible](#usage.accessible)
     * [add](#usage.add)
-    * [add\_prefixed\_keys\_to](#usage.add_prefixed_keys_to)
-    * [add\_unprefixed\_keys\_to](#usage.add_unprefixed_keys_to)
-    * [array\_visit\_recursive](#usage.array_visit_recursive)
+    * [add_prefixed_keys_to](#usage.add_prefixed_keys_to)
+    * [add_unprefixed_keys_to](#usage.add_unprefixed_keys_to)
     * [collapse](#usage.collapse)
     * [dot](#usage.dot)
     * [exists](#usage.exists)
@@ -31,33 +30,34 @@ pip install arrayutilities
     * [forget](#usage.forget)
     * [get](#usage.get)
     * [has](#usage.has)
-    * [insert\_after\_key](#usage.insert_after_key)
-    * [insert\_before\_key](#usage.insert_before_key)
-    * [is\_dict](#usage.is_dict)
-    * [is\_list](#usage.is_list)
+    * [insert_after_key](#usage.insert_after_key)
+    * [insert_before_key](#usage.insert_before_key)
+    * [is_dict](#usage.is_dict)
+    * [is_list](#usage.is_list)
     * [join](#usage.join)
     * [last](#usage.last)
-    * [list\_to\_array](#usage.list_to_array)
-    * [merge\_recursive](#usage.merge_recursive)
+    * [list_to_dict](#usage.list_to_dict)
+    * [list_to_string](#usage.list_to_string)
+    * [merge_recursive](#usage.merge_recursive)
     * [only](#usage.only)
     * [prepend](#usage.prepend)
     * [pull](#usage.pull)
     * [query](#usage.query)
     * [random](#usage.random)
-    * [recursive\_ksort](#usage.recursive_ksort)
+    * [recursive_ksort](#usage.recursive_ksort)
     * [set](#usage.set)
-    * [shape\_filter](#usage.shape_filter)
+    * [shape_filter](#usage.shape_filter)
     * [shuffle](#usage.shuffle)
-    * [sort\_by\_priority](#usage.sort_by_priority)
-    * [sort\_recursive](#usage.sort_recursive)
-    * [sort\_recursive\_desc](#usage.sort_recursive_desc)
-    * [stringify\_keys](#usage.stringify_keys)
+    * [sort_by_priority](#usage.sort_by_priority)
+    * [sort_recursive](#usage.sort_recursive)
+    * [sort_recursive_desc](#usage.sort_recursive_desc)
+    * [stringify_keys](#usage.stringify_keys)
     * [strpos](#usage.strpos)
-    * [to\_list](#usage.to_list)
     * [undot](#usage.undot)
     * [usearch](#usage.usearch)
+    * [visit_recursive](#usage.visit_recursive)
     * [where](#usage.where)
-    * [where\_not\_none](#usage.where_not_none)
+    * [where_not_none](#usage.where_not_none)
     * [wrap](#usage.wrap)
 
 ## Usage
@@ -91,13 +91,16 @@ Determines if the given value is a list, dict, or UserDict.
 #### Examples
 
 ```python
+# With dicts!
 my_dict = { 'a': 1 }
-if Arr.accessible(my_dict):
-    print("It is!")
+Arr.accessible(my_dict) # Result: True
 
+# With lists!
 my_list = [ 1 ]
-if Arr.accessible(my_list):
-    print("This is too!")
+Arr.accessible(my_list) # Result: True
+
+# Other things aren't accessible.
+Arr.accessible('bacon') # Result: False
 ```
 
 <a id="Arr.add"></a>
@@ -122,6 +125,18 @@ Add an element to an array if it doesn't exist.
 
   Manipulated array
 
+#### Examples
+
+```python
+# Add a key/value pair to a dict.
+test_dict = {'a': 1}
+result = Arr.add(test_dict, 'b', 2) # Result: {'a': 1, 'b': 2}
+
+# Add a value to the end.
+test_list = [1, 2, 3]
+result = Arr.add(test_list, 4, 4) # Result: [1, 2, 3, 4]
+```
+
 <a id="Arr.add_prefixed_keys_to"></a>
 
 ### add\_prefixed\_keys\_to
@@ -142,6 +157,18 @@ Duplicates any key not prefixed with '_' creating a prefixed duplicate one.
 **Returns**:
 
   Manipulated array.
+
+#### Example
+
+```python
+# Prefix dicts.
+my_dict = {'a': 1, 'b': 2}
+result = Arr.add_prefixed_keys_to(my_dict) # Result: {'a': 1, 'b': 2, '_a': 1, '_b': 2}
+
+# Prefix lists by converting to dicts.
+my_list = [1, 2, 3]
+result = Arr.add_prefixed_keys_to(my_list) # Result: {0: 1, 1: 2, 2: 3, '_0': 1, '_1': 2, '_2': 3}
+```
 
 <a id="Arr.add_unprefixed_keys_to"></a>
 
@@ -164,29 +191,17 @@ Duplicates any key prefixed with '_' creating an un-prefixed duplicate one.
 
   Manipulated array.
 
-<a id="Arr.array_visit_recursive"></a>
-
-### array\_visit\_recursive
+#### Example
 
 ```python
-@staticmethod
-def array_visit_recursive(input_array, visitor)
+# Unprefix dicts.
+my_dict = {'_a': 1, '_b': 2}
+result = Arr.add_unprefixed_keys_to(my_dict) # Result: {'_a': 1, '_b': 2, 'a': 1, 'b': 2}
+
+# Recursively unprefix.
+my_list = {'_a': {'_c': 3}, 'b': 2}
+result = Arr.add_prefixed_keys_to(my_list) # Result: {'_a': {'_c': 3, 'c': 3}, 'b': 2, 'a': {'_c': 3, 'c': 3}}
 ```
-
-Recursively visits all elements of an array applying the specified callback to each element key and value.
-
-**Arguments**:
-
-- `input_array` - The input array whose nodes should be visited.
-- `visitor` - A callback function that will be called on each array item; the callback will
-  receive the item key and value as input and should return an array that contains
-  the update key and value in the shape [ &lt;key&gt;, &lt;value&gt; ]. Returning a null
-  key will cause the element to be removed from the array.
-
-
-**Returns**:
-
-  Manipulated array.
 
 <a id="Arr.collapse"></a>
 
@@ -207,6 +222,15 @@ Collapse an array of arrays into a single array.
 **Returns**:
 
   Collapsed array.
+
+#### Examples
+
+```python
+Arr.collapse([[1, 2, 3]]) # Result: [1, 2, 3]
+Arr.collapse([[1, 2], [3, 4], [5]]) # Result: [1, 2, 3, 4, 5]
+Arr.collapse([[1, 'a'], [3.5, 4], [True, None]]) # Result: [1, 'a', 3.5, 4, True, None]
+Arr.collapse([[], [1, 2], [], [3, 4], []]) # Result: [1, 2, 3, 4]
+```
 
 <a id="Arr.dot"></a>
 
@@ -229,6 +253,11 @@ Flatten a multi-dimensional associative array with dots.
 
   Manipulated array.
 
+```python
+Arr.dot({'a': 1, 'b': {'c': 2, 'd': {'e': 3}}}) # Result: {'a': 1, 'b.c': 2, 'b.d.e': 3}
+Arr.dot({'a': 1}, 'init.') # Result: {'init.a': 1}
+```
+
 <a id="Arr.exists"></a>
 
 ### exists
@@ -250,6 +279,13 @@ Determine if the given key exists in the provided array.
 
 - `boolean` - Whether or not the key exists.
 
+#### Examples
+
+```python
+Arr.exists({'a': 1, '1.5': 'yup'}, 'a') # Result: True
+Arr.exists({'a': 1, 'b': 2}, 'c') # Result: False
+```
+
 <a id="Arr.filter_prefixed"></a>
 
 ### filter\_prefixed
@@ -270,6 +306,16 @@ Filters an associative array non-recursively, keeping only the values attached t
 **Returns**:
 
   Filtered array.
+
+#### Examples
+
+```python
+test_dict = {'pref_one': 1, 'pref_two': 2, 'nopref_three': 3}
+Arr.filter_prefixed(test_dict, 'pref_') # Result: {'pref_one': 1, 'pref_two': 2}
+
+test_dict = {'one': 1, 'two': 2, 'three': 3}
+Arr.filter_prefixed(test_dict, 'pref_') # Result: {}
+```
 
 <a id="Arr.first"></a>
 
@@ -293,6 +339,20 @@ Return the first element in an array passing a given truth test.
 
   Found value or default.
 
+#### Examples
+
+```python
+Arr.first({'a': 1, 'b': 2, 'c': 3}) # Result: 1
+
+# Find the first element that matches a callback.
+test_dict = {'a': 1, 'b': 2, 'c': 3}
+Arr.first(test_dict, callback=lambda v, k: k == 'b') # Result: 2
+
+# Find the first element that matches a callback or return a default value.
+test_dict = {'a': 1, 'b': 2, 'c': 3}
+result = Arr.first(test_dict, callback=lambda v, k: k == 'z', default=None) # Result: None
+```
+
 <a id="Arr.flatten"></a>
 
 ### flatten
@@ -314,6 +374,16 @@ Flatten a multi-dimensional array into a single level.
 
   Flattened array.
 
+#### Examples
+
+```python
+test_array = [1, [2, 3], 4]
+Arr.flatten(test_array) # Result: [1, 2, 3, 4]
+
+test_array = [1, [2, [3, [4, 5]]], 6]
+Arr.flatten(test_array, depth=2) # Result: [1, 2, 3, [4, 5], 6]
+```
+
 <a id="Arr.forget"></a>
 
 ### forget
@@ -329,6 +399,16 @@ Remove one or many array items from a given array using "dot" notation.
 
 - `array` - Array to manipulate.
 - `keys` _str|array_ - Key or keys to remove.
+
+#### Examples
+
+```python
+test_dict = {'a': 1, 'b': 2, 'c': 3}
+Arr.forget(test_dict, 'b') # Dict is now:  {'a': 1, 'c': 3}
+
+test_dict = {'a': 1, 'b': 2, 'c': {'d': 3, 'e': 4}}
+Arr.forget(test_dict, ['a', 'c.d']) # Dict is now: {'b': 2, 'c': {'e': 4}}
+```
 
 <a id="Arr.get"></a>
 
@@ -352,6 +432,16 @@ Find a value inside of an array or object, including one nested a few levels dee
 
 - `_type_` - _description_
 
+#### Examples
+
+```python
+test_dict = {'a': 1, 'b': 2, 'c': 3}
+Arr.get(test_dict, 'b') # Result: 2
+
+test_dict = {'a': 1, 'b': {'c': { 'e': 2}, 'd': 3}}
+Arr.get(test_dict, ['c', 'e']) # Result: 2
+```
+
 <a id="Arr.has"></a>
 
 ### has
@@ -372,6 +462,14 @@ Check if an item or items exist in an array using "dot" notation.
 **Returns**:
 
 - `boolean` - Whether the key exists or not.
+
+#### Examples
+
+```python
+Arr.has({'a': 1, 'b': 2}, 'a') # Result: True
+Arr.has({'a': 1, 'b': 2, 'c': 3}, ['a', 'b']) # Result: True
+Arr.has({'a': 1, 'b': 2}, ['a', 'x']) # Result: False
+```
 
 <a id="Arr.insert_after_key"></a>
 
@@ -395,6 +493,14 @@ Insert an array after a specified key within another array.
 
   Manipulated array.
 
+#### Examples
+
+```python
+Arr.insert_after_key(2, [1, 2, 3, 4], 5) # Result: [1, 2, 3, 5, 4]
+Arr.insert_after_key('b', {'a': 1, 'b': 2, 'c': 3}, {'new': 25}) # Result: {'a': 1, 'b': 2, 'new': 25, 'c': 3}
+Arr.insert_after_key('b', {'a': 1, 'b': 2, 'c': 3}, 25) # Result: raises TypeError
+```
+
 <a id="Arr.insert_before_key"></a>
 
 ### insert\_before\_key
@@ -417,6 +523,14 @@ Insert an array before a specified key within another array.
 
   Manipulated array.
 
+#### Examples
+
+```python
+Arr.insert_before_key(1, [10, 20, 30], 15) # Result: [10, 15, 20, 30]
+Arr.insert_before_key('b', {'a': 1, 'b': 2, 'c': 3}, {'new': 25}) # Result: {'a': 1, 'new': 25, 'b': 2, 'c': 3}
+Arr.insert_before_key('b', {'a': 1, 'b': 2, 'c': 3}, 25) # Result: raises TypeError
+```
+
 <a id="Arr.is_dict"></a>
 
 ### is\_dict
@@ -437,6 +551,14 @@ Returns whether the array is a dict or not.
 
 - `boolean` - Whether the array is a dict or not.
 
+#### Examples
+
+```python
+Arr.is_dict({}) # Result: True
+Arr.is_dict([]) # Result: False
+Arr.is_dict(1) # Result: False
+```
+
 <a id="Arr.is_list"></a>
 
 ### is\_list
@@ -456,6 +578,14 @@ Returns whether the array is a list or not.
 **Returns**:
 
 - `boolean` - Whether the array is a list or not.
+
+#### Examples
+
+```python
+Arr.is_list([]) # Result: True
+Arr.is_list({}) # Result: False
+Arr.is_list(1) # Result: False
+```
 
 <a id="Arr.join"></a>
 
@@ -479,6 +609,13 @@ Join all items using a string. The final items can use a separate glue string.
 
 - `str` - Joined string.
 
+#### Examples
+
+```python
+Arr.join(['apple', 'banana', 'cherry'], ', ') # Result: 'apple, banana, cherry'
+Arr.join(['apple', 'banana', 'cherry'], ', ', ', and ') # Result: 'apple, banana, and cherry'
+```
+
 <a id="Arr.last"></a>
 
 ### last
@@ -501,28 +638,69 @@ Return the last element in an array passing a given truth test.
 
   Found value or default.
 
-<a id="Arr.list_to_array"></a>
+#### Examples
 
-### list\_to\_array
+```python
+Arr.last([1, 2, 3]) # Result: 3
+Arr.last([1, 2, 3, 4, 5], lambda x: x % 2 == 0) # Result: 4
+Arr.last([1, 3, 5], lambda x: x % 2 == 0, default='no match') # Result: 'no match'
+```
+
+<a id="Arr.list_to_dict"></a>
+
+### list\_to\_dict
 
 ```python
 @staticmethod
-def list_to_array(value, sep=',')
+def list_to_dict(value)
 ```
 
-Converts a list to an array filtering out empty string elements.
+Converts a list to a dict.
 
 **Arguments**:
 
-- `value` _str|number|None_ - A string representing a list of values separated by the specified separator
-  or an array. If the list is a string (e.g. a CSV list) then it will urldecoded
-  before processing.
-- `sep` _str, optional_ - The char(s) separating the list elements; will be ignored if the list is an array. Defaults to ','.
-
+- `value` _list_ - A list to convert to a dict.
 
 **Returns**:
 
   Manipulated array.
+
+#### Examples
+
+```python
+Arr.list_to_dict([]) # Result: {}
+Arr.list_to_dict(['apple', 'banana', 'cherry']) # Result: {0: 'apple', 1: 'banana', 2: 'cherry'}
+Arr.list_to_dict('not a list') # Result: {0: 'not a list'}
+```
+
+<a id="Arr.list_to_string"></a>
+
+### list\_to\_string
+
+```python
+@staticmethod
+def list_to_string(list_items, sep=',')
+```
+
+Returns a list separated by the specified separator.
+
+**Arguments**:
+
+- `list_items` - Array of items.
+- `sep` _str, optional_ - Separator. Defaults to ','.
+
+
+**Returns**:
+
+  The list separated by the specified separator or the original list if the list is empty.
+
+#### Examples
+
+```python
+Arr.list_to_string(['apple', 'banana', 'cherry']) # Result: 'apple,banana,cherry'
+Arr.list_to_string(['apple', 'banana', 'cherry'], sep=';') # Result: 'apple;banana;cherry'
+```
+
 
 <a id="Arr.merge_recursive"></a>
 
@@ -545,6 +723,19 @@ Recursively merge two arrays preserving keys.
 
   Merged array.
 
+#### Examples
+
+```python
+array1 = {'a': 1, 'b': 2}
+array2 = {'b': 3, 'c': 4}
+Arr.merge_recursive(array1, array2) # Result: {'a': 1, 'b': 3, 'c': 4}
+
+
+array1 = {'a': {'b': 1, 'c': 2}}
+array2 = {'a': {'c': 3, 'd': 4}}
+Arr.merge_recursive(array1, array2) # Result: {'a': {'b': 1, 'c': 3, 'd': 4}}
+```
+
 <a id="Arr.only"></a>
 
 ### only
@@ -565,6 +756,18 @@ Get a subset of the items from the given array.
 **Returns**:
 
   Array subset.
+
+#### Examples
+
+```python
+array = {'a': 1, 'b': 2, 'c': 3}
+keys = ['a', 'c']
+Arr.only(array, keys) # Result: {'a': 1, 'c': 3}
+
+array = {'a': 1, 'b': 2, 'c': 3}
+keys = ['x', 'y', 'z']
+Arr.only(array, keys) # Result: {}
+```
 
 <a id="Arr.prepend"></a>
 
@@ -588,6 +791,14 @@ Push an item onto the beginning of an array.
 
   Manipulated array.
 
+#### Examples
+
+```python
+Arr.prepend([2, 3, 4], 10) # Result: [10, 2, 3, 4]
+Arr.prepend({'b': 2, 'c': 3}, 10) # Result: {0: 10, 'b': 2, 'c': 3}
+Arr.prepend({'b': 2, 'c': 3}, 10, 'a') # Result: {'a': 10, 'b': 2, 'c': 3}
+```
+
 <a id="Arr.pull"></a>
 
 ### pull
@@ -610,6 +821,19 @@ Get a value from the array, and remove it.
 
 - `Any` - The found value or default.
 
+#### Examples
+
+```python
+array = {'a': 1, 'b': 2, 'c': 3}
+key = 'b'
+Arr.pull(array, key) # Result: 2, Dictionary is now: {'a': 1, 'c': 3}
+
+array = {'a': 1, 'b': 2, 'c': 3}
+key = 'd'
+default = 'not found'
+result = Arr.pull(array, key, default) # Result: 'not found', Dictionary is now: {'a': 1, 'b': 2, 'c': 3}
+```
+
 <a id="Arr.query"></a>
 
 ### query
@@ -629,6 +853,19 @@ Convert the array into a query string.
 **Returns**:
 
 - `str` - URL query string.
+
+#### Examples
+
+```python
+data = {'name': 'John', 'age': 30, 'city': 'New York'}
+Arr.query(data) # Result: 'name=John&age=30&city=New+York'
+
+data = {'name': 'John', 'info': {'age': 30, 'city': 'New York'}}
+Arr.query(data) # Result: 'name=John&info[age]=30&info[city]=New+York'
+
+data = {'name': 'John', 'info': {'age': 30, 'city': ['New York', 'Phoenix']}}
+Arr.query(data) # Result: 'name=John&info[age]=30&info[city][0]=New+York&info[city][1]=Phoenix'
+```
 
 <a id="Arr.random"></a>
 
@@ -657,6 +894,13 @@ Get one or a specified number of random values from an array.
 
   Array with the random values.
 
+#### Examples
+
+```python
+Arr.random({'a': 1, 'b': 2, 'c': 3, 'd': 4, 'e': 5}) # Result: 1 random value
+Arr.random({'a': 1, 'b': 2, 'c': 3, 'd': 4, 'e': 5}, number=3, preserve_keys=True) # Result: 3 random values with keys
+```
+
 <a id="Arr.recursive_ksort"></a>
 
 ### recursive\_ksort
@@ -676,6 +920,16 @@ Recursively key-sort an array.
 **Returns**:
 
   Sorted array.
+
+#### Examples
+
+```python
+test_dict = {'b': 2, 'a': 1}
+Arr.recursive_ksort(test_dict) # Result: {'a': 1, 'b': 2}
+
+test_dict = {'b': 2, 'a': {'c': 3, 'b': 2}, 'd': [4, 3, 2], 'c': 'hello'}
+Arr.recursive_ksort(test_dict) # Result: {'a': {'b': 2, 'c': 3}, 'b': 2, 'c': 'hello', 'd': [4, 3, 2]}
+```
 
 <a id="Arr.set"></a>
 
@@ -701,6 +955,13 @@ Set key/value within an array, can set a key nested inside of a multidimensional
 
   The manipulated array.
 
+#### Examples
+
+```python
+Arr.set({}, 'a', 1) # Result: {'a': 1}
+Arr.set({}, ['a', 'b', 'c'], 1) # Result: {'a': {'b': {'c': 1}}}
+```
+
 <a id="Arr.shape_filter"></a>
 
 ### shape\_filter
@@ -724,6 +985,22 @@ Shapes, filtering it, an array to the specified expected set of required keys.
 
   The manipulated array.
 
+#### Examples
+
+```python
+test_dict = {'a': 1, 'b': 2, 'c': 3}
+shape = {'a': None, 'b': None}
+Arr.shape_filter(test_dict, shape) # Result: {'a': 1, 'b': 2}
+
+test_dict = {'a': {'b': 1, 'c': 2}, 'd': {'e': 3, 'f': 4}}
+shape = {'a': {'b': None}}
+Arr.shape_filter(test_dict, shape) # Result: {'a': {'b': 1}}
+
+test_dict = {'a': 1, 'b': 2}
+shape = {'a': None, 'c': None}
+Arr.shape_filter(test_dict, shape) # Result: {'a': 1}
+```
+
 <a id="Arr.shuffle"></a>
 
 ### shuffle
@@ -745,6 +1022,16 @@ Shuffle the given array and return the result.
 
   The shuffled array.
 
+#### Examples
+
+```python
+test_array = [i for i in range(1, 25)]
+Arr.shuffle(test_array) # Result: Shuffled array
+
+test_array = [i for i in range(1, 25)]
+Arr.shuffle(test_array, 1234) # Result: Shuffled array with a specific seed
+```
+
 <a id="Arr.sort_by_priority"></a>
 
 ### sort\_by\_priority
@@ -764,6 +1051,13 @@ Sort based on Priority.
 **Returns**:
 
   Sorted dict.
+
+#### Examples
+
+```python
+input_array = [{'name': 'John', 'priority': 2}, {'name': 'Alice', 'priority': 1}, {'name': 'Bob', 'priority': 3}]
+Arr.sort_by_priority(input_array) # Result: [{'name': 'Alice', 'priority': 1}, {'name': 'John', 'priority': 2}, {'name': 'Bob', 'priority': 3}]
+```
 
 <a id="Arr.sort_recursive"></a>
 
@@ -786,6 +1080,16 @@ Recursively sort an array by keys and values.
 
   Sorted array.
 
+#### Examples
+
+```python
+input_array = {'c': 3, 'a': {'b': 2, 'd': 4}}
+Arr.sort_recursive(input_array) # Result: {'a': {'b': 2, 'd': 4}, 'c': 3}
+
+input_array = {'c': 3, 'a': {'b': 2, 'd': 4}}
+Arr.sort_recursive(input_array, descending=True) # Result: {'c': 3, 'a': {'d': 4, 'b': 2}}
+```
+
 <a id="Arr.sort_recursive_desc"></a>
 
 ### sort\_recursive\_desc
@@ -805,6 +1109,14 @@ Recursively sort an array by keys and values in descending order.
 **Returns**:
 
   Sorted array.
+
+
+#### Examples
+
+```python
+input_array = {'c': 3, 'a': {'b': 2, 'd': 4}}
+Arr.sort_recursive_desc(input_array) # Result: {'c': 3, 'a': {'d': 4, 'b': 2}}
+```
 
 <a id="Arr.stringify_keys"></a>
 
@@ -826,6 +1138,17 @@ Stringifies the numeric keys of an array.
 **Returns**:
 
   Manipulated array.
+
+#### Examples
+
+```python
+test_array = {'a': 1, 'b': 2, 'c': 3}
+prefix = 'prefix_'
+result = Arr.stringify_keys(test_array, prefix) # Result: {'prefix_a': 1, 'prefix_b': 2, 'prefix_c': 3}
+
+test_array = {1: 'a', 2: 'b', 3: 'c'}
+result = Arr.stringify_keys(test_array, 'sk_') # Result: {'sk_1': 'a', 'sk_2': 'b', 'sk_3': 'c'}
+```
 
 <a id="Arr.strpos"></a>
 
@@ -849,26 +1172,48 @@ Behaves exactly like the native PHP's strpos(), but accepts an array of needles.
 
 - `_type_` - _description_
 
-<a id="Arr.to_list"></a>
+#### Examples
 
-### to\_list
+```python
+Arr.strpos("hello world", "world") # Result: 6
+Arr.strpos("hello world", "earth") # Result: False
+Arr.strpos("hello world", ["world", "ello"]) # Result: 1
+
+# Offset of 6.
+Arr.strpos("hello world hello", "hello", 6) # Result: 12
+```
+
+<a id="Arr.str_to_list"></a>
+
+### str\_to\_list
 
 ```python
 @staticmethod
-def to_list(list_items, sep=',')
+def str_to_list(value, sep=',')
 ```
 
-Returns a list separated by the specified separator.
+Converts a list to an array filtering out empty string elements.
 
 **Arguments**:
 
-- `list_items` - Array of items.
-- `sep` _str, optional_ - Separator. Defaults to ','.
+- `value` _str|number|None_ - A string representing a list of values separated by the specified separator
+  or an array. If the list is a string (e.g. a CSV list) then it will urldecoded
+  before processing.
+- `sep` _str, optional_ - The char(s) separating the list elements; will be ignored if the list is an array. Defaults to ','.
 
 
 **Returns**:
 
-  The list separated by the specified separator or the original list if the list is empty.
+  Manipulated array.
+
+#### Examples
+
+```python
+Arr.str_to_list("apple, banana, cherry") # Result: ["apple", "banana", "cherry"]
+Arr.str_to_list("apple|banana|cherry", sep="|") # Result: ["apple", "banana", "cherry"]
+Arr.str_to_list(" apple , banana , cherry ") # Result: ["apple", "banana", "cherry"]
+Arr.str_to_list("  ") # Result: []
+```
 
 <a id="Arr.undot"></a>
 
@@ -889,6 +1234,15 @@ Convert a flatten "dot" notation array into an expanded array.
 **Returns**:
 
   Manipulated array.
+
+#### Examples
+
+```python
+Arr.undot({'a.b': 1, 'a.c.d': 2, 'e.f.g': 3}) # Result: {'a': {'b': 1, 'c': {'d': 2}}, 'e': {'f': {'g': 3}}}
+
+# Duplicate keys. The last one takes precedence.
+Arr.undot({'a.b': 1, 'a.b.c': 2, 'a.b.c.d': 3}) # Result: {'a': {'b': {'c': {'d': 3}}}}
+```
 
 <a id="Arr.usearch"></a>
 
@@ -913,6 +1267,49 @@ Searches an array using a callback and returns the index of the first match.
 
   Either the index of the first match or False if no match was found.
 
+#### Examples
+
+```python
+def callback(needle, value, key):
+    return needle == value
+
+haystack = {'a': 1, 'b': 2, 'c': 3}
+needle = 2
+
+Arr.usearch(needle, haystack, callback) # Result: 'b'
+```
+
+<a id="Arr.visit_recursive"></a>
+
+### visit\_recursive
+
+```python
+@staticmethod
+def visit_recursive(input_array, visitor)
+```
+
+Recursively visits all elements of an array applying the specified callback to each element key and value.
+
+**Arguments**:
+
+- `input_array` - The input array whose nodes should be visited.
+- `visitor` - A callback function that will be called on each array item; the callback will
+  receive the item key and value as input and should return an array that contains
+  the update key and value in the shape [ &lt;key&gt;, &lt;value&gt; ]. Returning a null
+  key will cause the element to be removed from the array.
+
+
+**Returns**:
+
+  Manipulated array.
+
+### Examples
+
+```python
+my_dict = {'a': 1, 'b': 2}
+result = Arr.visit_recursive(my_dict, lambda k, v: (k, v * 2)) # Result: {'a': 2, 'b': 4}
+```
+
 <a id="Arr.where"></a>
 
 ### where
@@ -934,6 +1331,17 @@ Filter the array using the given callback.
 
   The filtered array.
 
+#### Examples
+
+```python
+def callback(value, key):
+    return value % 2 == 0
+
+array = {'a': 1, 'b': 2, 'c': 3, 'd': 4, 'e': 5}
+
+Arr.where(array, callback) # Result: {'b': 2, 'd': 4}
+```
+
 <a id="Arr.where_not_none"></a>
 
 ### where\_not\_none
@@ -953,6 +1361,13 @@ Filter items where the value is not None.
 **Returns**:
 
   The filtered array.
+
+#### Examples
+
+```python
+array = {'a': 1, 'b': None, 'c': 3, 'd': None}
+Arr.where_not_none(array) # Result: {'a': 1, 'c': 3}
+```
 
 <a id="Arr.wrap"></a>
 
@@ -974,3 +1389,11 @@ If the given value is not a list, dict, or UserDict and not None, wrap it in one
 
   Wrapped value.
 
+#### Examples
+
+```python
+Arr.wrap(None) # Result: []
+Arr.wrap(1) # Result: [1]
+Arr.wrap('hello') # Result: ['hello']
+Arr.wrap([1, 2, 3]) # Result: [1, 2, 3]
+```
