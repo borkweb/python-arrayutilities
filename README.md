@@ -70,7 +70,7 @@ from arrayutilities import Arr
 
 <a id="Arr.accessible"></a>
 
-#### accessible
+### accessible
 
 ```python
 @staticmethod
@@ -90,7 +90,7 @@ Determines if the given value is a list, dict, or UserDict.
 
 <a id="Arr.add"></a>
 
-#### add
+### add
 
 ```python
 @staticmethod
@@ -112,7 +112,7 @@ Add an element to an array if it doesn't exist.
 
 <a id="Arr.add_prefixed_keys_to"></a>
 
-#### add\_prefixed\_keys\_to
+### add\_prefixed\_keys\_to
 
 ```python
 @staticmethod
@@ -133,7 +133,7 @@ Duplicates any key not prefixed with '_' creating a prefixed duplicate one.
 
 <a id="Arr.add_unprefixed_keys_to"></a>
 
-#### add\_unprefixed\_keys\_to
+### add\_unprefixed\_keys\_to
 
 ```python
 @staticmethod
@@ -154,7 +154,7 @@ Duplicates any key prefixed with '_' creating an un-prefixed duplicate one.
 
 <a id="Arr.array_visit_recursive"></a>
 
-#### array\_visit\_recursive
+### array\_visit\_recursive
 
 ```python
 @staticmethod
@@ -178,7 +178,7 @@ Recursively visits all elements of an array applying the specified callback to e
 
 <a id="Arr.collapse"></a>
 
-#### collapse
+### collapse
 
 ```python
 @staticmethod
@@ -198,7 +198,7 @@ Collapse an array of arrays into a single array.
 
 <a id="Arr.dot"></a>
 
-#### dot
+### dot
 
 ```python
 @staticmethod
@@ -219,7 +219,7 @@ Flatten a multi-dimensional associative array with dots.
 
 <a id="Arr.exists"></a>
 
-#### exists
+### exists
 
 ```python
 @staticmethod
@@ -240,7 +240,7 @@ Determine if the given key exists in the provided array.
 
 <a id="Arr.filter_prefixed"></a>
 
-#### filter\_prefixed
+### filter\_prefixed
 
 ```python
 @staticmethod
@@ -261,7 +261,7 @@ Filters an associative array non-recursively, keeping only the values attached t
 
 <a id="Arr.first"></a>
 
-#### first
+### first
 
 ```python
 @staticmethod
@@ -283,7 +283,7 @@ Return the first element in an array passing a given truth test.
 
 <a id="Arr.flatten"></a>
 
-#### flatten
+### flatten
 
 ```python
 @staticmethod
@@ -304,7 +304,7 @@ Flatten a multi-dimensional array into a single level.
 
 <a id="Arr.forget"></a>
 
-#### forget
+### forget
 
 ```python
 @staticmethod
@@ -320,7 +320,7 @@ Remove one or many array items from a given array using "dot" notation.
 
 <a id="Arr.get"></a>
 
-#### get
+### get
 
 ```python
 @staticmethod
@@ -342,7 +342,7 @@ Find a value inside of an array or object, including one nested a few levels dee
 
 <a id="Arr.has"></a>
 
-#### has
+### has
 
 ```python
 @staticmethod
@@ -363,7 +363,7 @@ Check if an item or items exist in an array using "dot" notation.
 
 <a id="Arr.insert_after_key"></a>
 
-#### insert\_after\_key
+### insert\_after\_key
 
 ```python
 @staticmethod
@@ -385,7 +385,7 @@ Insert an array after a specified key within another array.
 
 <a id="Arr.insert_before_key"></a>
 
-#### insert\_before\_key
+### insert\_before\_key
 
 ```python
 @staticmethod
@@ -407,7 +407,7 @@ Insert an array before a specified key within another array.
 
 <a id="Arr.is_dict"></a>
 
-#### is\_dict
+### is\_dict
 
 ```python
 @staticmethod
@@ -427,7 +427,7 @@ Returns whether the array is a dict or not.
 
 <a id="Arr.is_list"></a>
 
-#### is\_list
+### is\_list
 
 ```python
 @staticmethod
@@ -447,7 +447,7 @@ Returns whether the array is a list or not.
 
 <a id="Arr.join"></a>
 
-#### join
+### join
 
 ```python
 @staticmethod
@@ -469,7 +469,7 @@ Join all items using a string. The final items can use a separate glue string.
 
 <a id="Arr.last"></a>
 
-#### last
+### last
 
 ```python
 @staticmethod
@@ -491,7 +491,7 @@ Return the last element in an array passing a given truth test.
 
 <a id="Arr.list_to_array"></a>
 
-#### list\_to\_array
+### list\_to\_array
 
 ```python
 @staticmethod
@@ -514,7 +514,7 @@ Converts a list to an array filtering out empty string elements.
 
 <a id="Arr.merge_recursive"></a>
 
-#### merge\_recursive
+### merge\_recursive
 
 ```python
 @staticmethod
@@ -535,7 +535,7 @@ Recursively merge two arrays preserving keys.
 
 <a id="Arr.only"></a>
 
-#### only
+### only
 
 ```python
 @staticmethod
@@ -556,7 +556,7 @@ Get a subset of the items from the given array.
 
 <a id="Arr.prepend"></a>
 
-#### prepend
+### prepend
 
 ```python
 @staticmethod
@@ -578,7 +578,7 @@ Push an item onto the beginning of an array.
 
 <a id="Arr.pull"></a>
 
-#### pull
+### pull
 
 ```python
 @staticmethod
@@ -600,7 +600,7 @@ Get a value from the array, and remove it.
 
 <a id="Arr.query"></a>
 
-#### query
+### query
 
 ```python
 @staticmethod
@@ -620,7 +620,7 @@ Convert the array into a query string.
 
 <a id="Arr.random"></a>
 
-#### random
+### random
 
 ```python
 @staticmethod
@@ -647,7 +647,7 @@ Get one or a specified number of random values from an array.
 
 <a id="Arr.recursive_ksort"></a>
 
-#### recursive\_ksort
+### recursive\_ksort
 
 ```python
 @staticmethod
@@ -667,7 +667,7 @@ Recursively key-sort an array.
 
 <a id="Arr.set"></a>
 
-#### set
+### set
 
 ```python
 @staticmethod
@@ -691,7 +691,7 @@ Set key/value within an array, can set a key nested inside of a multidimensional
 
 <a id="Arr.shape_filter"></a>
 
-#### shape\_filter
+### shape\_filter
 
 ```python
 @staticmethod
@@ -714,7 +714,7 @@ Shapes, filtering it, an array to the specified expected set of required keys.
 
 <a id="Arr.shuffle"></a>
 
-#### shuffle
+### shuffle
 
 ```python
 @staticmethod
@@ -735,7 +735,7 @@ Shuffle the given array and return the result.
 
 <a id="Arr.sort_by_priority"></a>
 
-#### sort\_by\_priority
+### sort\_by\_priority
 
 ```python
 @staticmethod
@@ -755,7 +755,7 @@ Sort based on Priority.
 
 <a id="Arr.sort_recursive"></a>
 
-#### sort\_recursive
+### sort\_recursive
 
 ```python
 @staticmethod
@@ -776,7 +776,7 @@ Recursively sort an array by keys and values.
 
 <a id="Arr.sort_recursive_desc"></a>
 
-#### sort\_recursive\_desc
+### sort\_recursive\_desc
 
 ```python
 @staticmethod
@@ -796,7 +796,7 @@ Recursively sort an array by keys and values in descending order.
 
 <a id="Arr.stringify_keys"></a>
 
-#### stringify\_keys
+### stringify\_keys
 
 ```python
 @staticmethod
@@ -817,7 +817,7 @@ Stringifies the numeric keys of an array.
 
 <a id="Arr.strpos"></a>
 
-#### strpos
+### strpos
 
 ```python
 @staticmethod
@@ -839,7 +839,7 @@ Behaves exactly like the native PHP's strpos(), but accepts an array of needles.
 
 <a id="Arr.to_list"></a>
 
-#### to\_list
+### to\_list
 
 ```python
 @staticmethod
@@ -860,7 +860,7 @@ Returns a list separated by the specified separator.
 
 <a id="Arr.undot"></a>
 
-#### undot
+### undot
 
 ```python
 @staticmethod
@@ -880,7 +880,7 @@ Convert a flatten "dot" notation array into an expanded array.
 
 <a id="Arr.usearch"></a>
 
-#### usearch
+### usearch
 
 ```python
 @staticmethod
@@ -903,7 +903,7 @@ Searches an array using a callback and returns the index of the first match.
 
 <a id="Arr.where"></a>
 
-#### where
+### where
 
 ```python
 @staticmethod
@@ -924,7 +924,7 @@ Filter the array using the given callback.
 
 <a id="Arr.where_not_none"></a>
 
-#### where\_not\_none
+### where\_not\_none
 
 ```python
 @staticmethod
@@ -944,7 +944,7 @@ Filter items where the value is not None.
 
 <a id="Arr.wrap"></a>
 
-#### wrap
+### wrap
 
 ```python
 @staticmethod
