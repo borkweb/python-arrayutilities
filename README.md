@@ -88,6 +88,18 @@ Determines if the given value is a list, dict, or UserDict.
 
 - `boolean` - Whether the the value is a list, dict, or UserDict.
 
+#### Usage
+
+```python
+my_dict = { 'a': 1 }
+if Arr.accessible(my_dict):
+    print("It is!")
+
+my_list = [ 1 ]
+if Arr.accessible(my_list):
+    print("This is too!")
+```
+
 <a id="Arr.add"></a>
 
 ### add
