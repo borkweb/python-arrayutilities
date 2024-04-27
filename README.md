@@ -88,7 +88,7 @@ Determines if the given value is a list, dict, or UserDict.
 
 - `boolean` - Whether the the value is a list, dict, or UserDict.
 
-#### Usage
+#### Examples
 
 ```python
 my_dict = { 'a': 1 }
