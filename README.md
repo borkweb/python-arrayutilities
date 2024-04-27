@@ -4,10 +4,6 @@
 
 A library for list, dict, and UserDict manipulations.
 
-## Table of contents
-
-* [Installation](#installation)
-* [Usage](#usage)
 
 ## Installation
 
@@ -17,66 +13,59 @@ Install arrayutils via pip:
 pip install arrayutils
 ```
 
+## Table of contents
+
+* [Installation](#installation)
+* [Usage](#usage)
+    * [accessible](#usage.accessible)
+    * [add](#usage.add)
+    * [add\_prefixed\_keys\_to](#usage.add_prefixed_keys_to)
+    * [add\_unprefixed\_keys\_to](#usage.add_unprefixed_keys_to)
+    * [array\_visit\_recursive](#usage.array_visit_recursive)
+    * [collapse](#usage.collapse)
+    * [dot](#usage.dot)
+    * [exists](#usage.exists)
+    * [filter\_prefixed](#usage.filter_prefixed)
+    * [first](#usage.first)
+    * [flatten](#usage.flatten)
+    * [forget](#usage.forget)
+    * [get](#usage.get)
+    * [has](#usage.has)
+    * [insert\_after\_key](#usage.insert_after_key)
+    * [insert\_before\_key](#usage.insert_before_key)
+    * [is\_dict](#usage.is_dict)
+    * [is\_list](#usage.is_list)
+    * [join](#usage.join)
+    * [last](#usage.last)
+    * [list\_to\_array](#usage.list_to_array)
+    * [merge\_recursive](#usage.merge_recursive)
+    * [only](#usage.only)
+    * [prepend](#usage.prepend)
+    * [pull](#usage.pull)
+    * [query](#usage.query)
+    * [random](#usage.random)
+    * [recursive\_ksort](#usage.recursive_ksort)
+    * [set](#usage.set)
+    * [shape\_filter](#usage.shape_filter)
+    * [shuffle](#usage.shuffle)
+    * [sort\_by\_priority](#usage.sort_by_priority)
+    * [sort\_recursive](#usage.sort_recursive)
+    * [sort\_recursive\_desc](#usage.sort_recursive_desc)
+    * [stringify\_keys](#usage.stringify_keys)
+    * [strpos](#usage.strpos)
+    * [to\_list](#usage.to_list)
+    * [undot](#usage.undot)
+    * [usearch](#usage.usearch)
+    * [where](#usage.where)
+    * [where\_not\_none](#usage.where_not_none)
+    * [wrap](#usage.wrap)
+
 ## Usage
 
 Here are descriptions and usage examples for each method in the `Arr` class that you can get by:
 
 ```python
 from arrayutils import Arr
-```
-
-# Table of Contents
-
-* [Arr](#Arr)
-    * [accessible](#Arr.accessible)
-    * [add](#Arr.add)
-    * [add\_prefixed\_keys\_to](#Arr.add_prefixed_keys_to)
-    * [add\_unprefixed\_keys\_to](#Arr.add_unprefixed_keys_to)
-    * [array\_visit\_recursive](#Arr.array_visit_recursive)
-    * [collapse](#Arr.collapse)
-    * [dot](#Arr.dot)
-    * [exists](#Arr.exists)
-    * [filter\_prefixed](#Arr.filter_prefixed)
-    * [first](#Arr.first)
-    * [flatten](#Arr.flatten)
-    * [forget](#Arr.forget)
-    * [get](#Arr.get)
-    * [has](#Arr.has)
-    * [insert\_after\_key](#Arr.insert_after_key)
-    * [insert\_before\_key](#Arr.insert_before_key)
-    * [is\_dict](#Arr.is_dict)
-    * [is\_list](#Arr.is_list)
-    * [join](#Arr.join)
-    * [last](#Arr.last)
-    * [list\_to\_array](#Arr.list_to_array)
-    * [merge\_recursive](#Arr.merge_recursive)
-    * [only](#Arr.only)
-    * [prepend](#Arr.prepend)
-    * [pull](#Arr.pull)
-    * [query](#Arr.query)
-    * [random](#Arr.random)
-    * [recursive\_ksort](#Arr.recursive_ksort)
-    * [set](#Arr.set)
-    * [shape\_filter](#Arr.shape_filter)
-    * [shuffle](#Arr.shuffle)
-    * [sort\_by\_priority](#Arr.sort_by_priority)
-    * [sort\_recursive](#Arr.sort_recursive)
-    * [sort\_recursive\_desc](#Arr.sort_recursive_desc)
-    * [stringify\_keys](#Arr.stringify_keys)
-    * [strpos](#Arr.strpos)
-    * [to\_list](#Arr.to_list)
-    * [undot](#Arr.undot)
-    * [usearch](#Arr.usearch)
-    * [where](#Arr.where)
-    * [where\_not\_none](#Arr.where_not_none)
-    * [wrap](#Arr.wrap)
-
-<a id="Arr"></a>
-
-## Arr Objects
-
-```python
-class Arr()
 ```
 
 <a id="Arr.accessible"></a>
