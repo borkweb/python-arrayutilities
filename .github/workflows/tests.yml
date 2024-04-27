@@ -4,11 +4,11 @@ on:
   pull_request:
     paths:
       - 'tests/**.py'
-      - 'arrayutils/**.py'
+      - 'arrayutilities/**.py'
   push:
     paths:
       - 'tests/**.py'
-      - 'arrayutils/**.py'
+      - 'arrayutilities/**.py'
 
 jobs:
   build:

@@ -1,5 +1,5 @@
 import unittest
-from arrayutils import Arr
+from arrayutilities import Arr
 from collections import UserDict
 
 class TestArr(unittest.TestCase):

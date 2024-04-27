@@ -1,5 +1,5 @@
 import unittest
-from arrayutils import Arr
+from arrayutilities import Arr
 
 class TestArr(unittest.TestCase):
     def test_add_new_key(self):

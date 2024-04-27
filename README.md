@@ -1,16 +1,16 @@
-# ArrayUtils (Arr)
+# ArrayUtilities (Arr)
 
-[![Tests](https://github.com/borkweb/python-arrayutils/workflows/Tests/badge.svg)](https://github.com/borkweb/python-arrayutils/actions?query=branch%3Amain)
+[![Tests](https://github.com/borkweb/python-arrayutilities/workflows/Tests/badge.svg)](https://github.com/borkweb/python-arrayutilities/actions?query=branch%3Amain)
 
 A library for list, dict, and UserDict manipulations.
 
 
 ## Installation
 
-Install arrayutils via pip:
+Install arrayutilities via pip:
 
 ```bash
-pip install arrayutils
+pip install arrayutilities
 ```
 
 ## Table of contents
@@ -65,7 +65,7 @@ pip install arrayutils
 Here are descriptions and usage examples for each method in the `Arr` class that you can get by:
 
 ```python
-from arrayutils import Arr
+from arrayutilities import Arr
 ```
 
 <a id="Arr.accessible"></a>

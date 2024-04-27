@@ -1,7 +1,7 @@
 from setuptools import find_packages, setup
 
 setup(
-    name='arrayutils',
+    name='arrayutilities',
     packages=find_packages(),
     version='1.0.0',
     description='A library for list, dict, and UserDict manipulations.',

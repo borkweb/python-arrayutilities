@@ -1,4 +1,4 @@
-from arrayutils import Arr
+from arrayutilities import Arr
 import unittest
 
 class TestArrToList(unittest.TestCase):

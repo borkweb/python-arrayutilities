@@ -1,5 +1,5 @@
 import unittest
-from arrayutils import Arr
+from arrayutilities import Arr
 
 class TestArr(unittest.TestCase):
     def test_add_unprefixed_keys_non_dict(self):
